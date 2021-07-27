@@ -1,16 +1,23 @@
 package apiserver
 
-import "github.com/sirupsen/logrus"
+import (
+	"github.com/gorilla/mux"
+	"github.com/sirupsen/logrus"
+	"io"
+	"net/http"
+)
 
 type APIserver struct {
 	config *Config
 	logger *logrus.Logger
+	router *mux.Router
 }
 
 func New(config *Config) *APIserver {
 	return &APIserver{
 		config: config,
 		logger: logrus.New(),
+		router: mux.NewRouter(),
 	}
 }
 
@@ -19,9 +26,11 @@ func (s *APIserver) Start() error {
 		return err
 	}
 
+	s.configureRouter()
+
 	s.logger.Info("starting api server")
 
-	return nil
+	return http.ListenAndServe(s.config.BindAddr, s.router)
 }
 
 func (s *APIserver) configureLogger() error {
@@ -33,4 +42,18 @@ func (s *APIserver) configureLogger() error {
 	s.logger.SetLevel(level)
 
 	return nil
+}
+
+func (s *APIserver) configureRouter() error {
+	s.router.HandleFunc("/hello", s.handleHello())
+
+	return nil
+}
+
+func (s *APIserver) handleHello() http.HandlerFunc {
+	// ..some vars
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		io.WriteString(w, "Hello")
+	}
 }
