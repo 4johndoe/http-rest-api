@@ -1,2 +1,2 @@
-./apiserver
-./go.sum
+apiserver
+go.sum
