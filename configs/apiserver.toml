@@ -1,3 +1,4 @@
 bind_addr = ":8080"
 log_level = "debug"
 database_url = "host=10.133.133.26 port=5555 dbname=restapi_dev sslmode=disable user=crm password=crm26"
+session_key = ".L!al5e7Xgs@Mxk1glXppdY7feydDpYHLTdUWp+tfEwKpdoOcv8ZqMgMB8J-,VapHc;ddJy0lBQbyz)Dgo3dEo8yn*vQpmzLz$UVlb)kdy5uguxogDda#jDlPHaskq"
